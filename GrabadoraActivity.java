@@ -1,13 +1,17 @@
 package org.example.grabadora;
 
-import android.app.Activity;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,7 +27,9 @@ import java.io.IOException;
 
 
 
-public class GrabadoraActivity extends Activity {
+public class GrabadoraActivity extends ActionBarActivity {
+
+    private android.support.v7.widget.Toolbar toolbar;
 
     private static final String LOG_TAG = "Grabadora";
     private MediaRecorder mediaRecorder;
@@ -33,6 +39,25 @@ public class GrabadoraActivity extends Activity {
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grabadora);
+
+        toolbar= (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_grabadora, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id= item.getItemId();
+
+        if(id == R.id.action_settings){
+            Toast.makeText(this,"Hey you juust hit "+item.getTitle(),Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void grabar(View view) {
